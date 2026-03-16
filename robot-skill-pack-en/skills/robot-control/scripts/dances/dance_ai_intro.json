@@ -1,0 +1,18 @@
+{
+  "name": "AI介绍舞",
+  "description": "介绍机器人AI能力，边说边动",
+  "bpm": 100,
+  "steps": [
+    {"t": 0,    "cmd": "head.move", "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "抬头准备"},
+    {"t": 1000, "cmd": "tts.play",  "args": {"text": "大家好，我是你们的服务机器人！"}, "wait": true, "label": "自我介绍"},
+    {"t": 4000, "cmd": "head.move", "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "准备介绍"},
+    {"t": 5500, "cmd": "tts.play",  "args": {"text": "我搭载了先进的大模型AI能力"}, "wait": false, "label": "介绍AI"},
+    {"t": 8000, "cmd": "head.move", "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "正视前方"},
+    {"t": 9000, "cmd": "tts.play",  "args": {"text": "可以导航、拍照、识别人脸，还会说话！"}, "wait": true, "label": "介绍能力"},
+    {"t": 13000,"cmd": "base.turn", "args": {"dir": "left",  "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "左转90"},
+    {"t": 15500,"cmd": "base.turn", "args": {"dir": "right", "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "右转回正"},
+    {"t": 18000,"cmd": "head.move", "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "鞠躬"},
+    {"t": 19500,"cmd": "tts.play",  "args": {"text": "感谢大家！未来属于AI！"}, "wait": true, "label": "结束语"},
+    {"t": 22000,"cmd": "head.reset","args": {}, "label": "复位"}
+  ]
+}

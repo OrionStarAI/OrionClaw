@@ -1,0 +1,47 @@
+{
+  "name": "欢乐颂舞蹈 v5",
+  "description": "v5终极版：屏幕随节拍欢乐切换颜色+歌词，头部仰低头，底盘转向",
+  "bpm": 100,
+  "music": "ode_to_joy",
+  "steps": [
+    {"t": 0,     "cmd": "screen.show",   "args": {"text": "🎵 欢乐颂", "subText": "大家一起欢乐！", "bg": "#E91E63", "emoji": "🎵 🎶 🎤 🎊 🎉"}, "label": "屏幕开场"},
+    {"t": 500,   "cmd": "tts.play",      "args": {"text": "欢乐颂，大家一起欢乐！"}, "wait": true, "label": "开场白"},
+
+    {"t": 3500,  "cmd": "screen.update", "args": {"text": "🎶 Mi Mi Fa Sol", "subText": "第一段旋律", "bg": "#9C27B0"}, "label": "屏幕变紫"},
+    {"t": 3500,  "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "E4 居中"},
+
+    {"t": 4500,  "cmd": "screen.update", "args": {"text": "🚀 G4 ！", "bg": "#FF5722"}, "label": "屏幕橙"},
+    {"t": 4500,  "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "G4 极限仰头"},
+
+    {"t": 6000,  "cmd": "screen.update", "args": {"text": "↺ 转！", "subText": "向左看", "bg": "#2196F3"}, "label": "屏幕蓝"},
+    {"t": 6000,  "cmd": "base.turn",     "args": {"dir": "left", "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "底盘左转90°"},
+
+    {"t": 8000,  "cmd": "screen.update", "args": {"text": "🙇 C4", "subText": "鞠躬！", "bg": "#4CAF50"}, "label": "屏幕绿"},
+    {"t": 8000,  "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "E4 回中"},
+    {"t": 8800,  "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "C4 深鞠躬"},
+
+    {"t": 10200, "cmd": "screen.update", "args": {"text": "⬆️ 抬头！", "bg": "#FF9800"}, "label": "屏幕橙黄"},
+    {"t": 10200, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "E4 抬起"},
+
+    {"t": 11500, "cmd": "screen.update", "args": {"text": "↻ 转！", "subText": "向右看", "bg": "#F44336"}, "label": "屏幕红"},
+    {"t": 11500, "cmd": "base.turn",     "args": {"dir": "right", "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "底盘右转180°"},
+
+    {"t": 14500, "cmd": "screen.update", "args": {"text": "🌟 G4 高音！", "bg": "#FFEB3B", "textColor": "#333333"}, "label": "屏幕黄"},
+    {"t": 14500, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "G4 极限仰头 第二段"},
+
+    {"t": 16000, "cmd": "screen.update", "args": {"text": "🙇 再鞠躬！", "bg": "#009688"}, "label": "屏幕青"},
+    {"t": 16000, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "E4 回中"},
+    {"t": 16800, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "C4 深鞠躬"},
+
+    {"t": 18500, "cmd": "screen.update", "args": {"text": "↺ 转回！", "bg": "#673AB7"}, "label": "屏幕深紫"},
+    {"t": 18500, "cmd": "base.turn",     "args": {"dir": "left", "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "底盘左转90°回正面"},
+
+    {"t": 21500, "cmd": "screen.update", "args": {"text": "✨ 谢幕！", "subText": "感谢大家", "bg": "#E91E63", "emoji": "👏 👏 👏 🎊 🎉"}, "label": "屏幕谢幕"},
+    {"t": 21500, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "谢幕 仰头"},
+    {"t": 23000, "cmd": "head.move",     "args": {"pitchDeg": "<PITCH_DEG>", "hMode": "absolute", "vMode": "absolute"}, "label": "谢幕 深鞠躬"},
+    {"t": 24200, "cmd": "tts.play",      "args": {"text": "谢谢大家！"}, "wait": true, "label": "谢幕语"},
+
+    {"t": 26000, "cmd": "screen.hide",   "args": {}, "label": "屏幕恢复"},
+    {"t": 26500, "cmd": "head.reset",    "args": {}, "label": "复位"}
+  ]
+}
