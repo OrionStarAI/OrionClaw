@@ -133,67 +133,63 @@ curl http://localhost:18795/robot/health
 
 ---
 
-### 第 2 步：编译并安装 OrionClaw APK
+### 第 2 步：安装 OrionClaw APK
 
 OrionClaw 是安装在机器人（Android 设备）上的控制 APP，负责接收指令并调用机器人 OS API。
 
-> 💡 完整说明见 `OrionClaw/README.md`，以下是摘要。
+#### 2.1 下载预编译 APK
 
-#### 2.1 SDK 说明
-
-SDK jar（`robotservice.jar`）已随仓库提供，位于 `OrionClaw/app/libs/`，Maven 仓库地址和 credentials 已在 `OrionClaw/settings.gradle.kts` 中配置好，**无需任何修改，直接编译即可。**
-
-#### 2.2 包名说明
-
-源码已使用包名 `com.orionstar.openclaw`，**无需修改**，直接编译即可。
-
-如需改为自己的包名，修改 `OrionClaw/app/build.gradle.kts` 中的 `namespace` 和 `applicationId`，并将 `app/src/main/java/com/orionstar/openclaw/` 目录重命名为对应路径。
-
-#### 2.3 编译 APK
+从 [GitHub Releases](https://github.com/OrionStarAI/OrionClaw/releases/latest) 下载最新 APK，**无需 Android Studio 或 Java 环境**。
 
 ```bash
-cd OrionClaw
-./gradlew assembleDebug
+# macOS / Linux
+curl -L -o orionclaw.apk \
+  https://github.com/OrionStarAI/OrionClaw/releases/download/v1.0.0/orionclaw-v1.0.0.apk
 ```
 
-编译成功后，APK 位于：
-```
-app/build/outputs/apk/debug/app-debug.apk
-```
+Windows 用户直接在浏览器打开上方链接下载即可。
 
-> 需要 Java 11+ 和 Android SDK（API 26+）。推荐用 Android Studio 打开项目自动下载依赖。
+#### 2.2 安装 adb
 
-#### 2.4 安装到机器人
+adb（Android Debug Bridge）是连接机器人的命令行工具，**只需约 10MB，无需完整 Android Studio**。
 
-**第一步：在机器人上开启 Wi-Fi ADB**
+| 系统 | 安装命令 |
+|------|----------|
+| macOS | `brew install android-platform-tools` |
+| Windows | `winget install Google.PlatformTools` |
+| Linux | `sudo apt install adb` |
 
-在机器人的 Android 系统设置中，找到「开发者选项」→「无线调试」（或「ADB over Wi-Fi」），打开开关。需要在机器人本机上操作，开启后会显示机器人的 IP 地址和端口（默认 5555）。
+#### 2.3 在机器人上开启 Wi-Fi ADB
+
+在机器人的 Android 系统设置中，找到「开发者选项」→「无线调试」（或「ADB over Wi-Fi」），打开开关。**需要在机器人本机上操作**，开启后会显示机器人的 IP 地址（端口默认 5555）。
 
 ```bash
-# 连接机器人（通过 Wi-Fi ADB）
+# 连接机器人
 adb connect <机器人IP地址>:5555
 ```
 
-**第二步：安装 APK**
+#### 2.4 安装 APK
 
 ```bash
-adb install -r -t app/build/outputs/apk/debug/app-debug.apk
+adb -s <机器人IP地址>:5555 install -r -t orionclaw.apk
 ```
 
 > ⚠️ 安装时机器人屏幕上可能弹出「是否允许安装」的授权弹框，**需要在机器人上手动点击「允许」**，否则安装会一直等待或失败。
 
-#### 2.5 启动 APP（带参数）
+#### 2.5 启动 APP（命令行传参）
 
-通过 ADB 命令启动 APP 并传入配置，避免手动在界面输入：
+通过 ADB 命令启动 APP 并传入配置，无需在机器人界面手动输入：
 
 ```bash
-adb shell am start -n com.orionstar.openclaw/.MainActivity \
+adb -s <机器人IP地址>:5555 shell am start -n com.orionstar.openclaw/.MainActivity \
   --es gatewayHost "<网关服务器IP>" \
   --es token "your-secret-token-here" \
   --es deviceId "my-robot"
 ```
 
-> `gatewayHost` 填运行 robot-ws-ingress 的服务器 IP；`token` 与第 1 步配置的 token 一致；`deviceId` 随便起一个名字，后面会用到。
+> - `gatewayHost`：运行 robot-ws-ingress 的服务器 IP
+> - `token`：与第 1 步配置的 token 一致
+> - `deviceId`：随便起一个名字，后面会用到
 
 **验证机器人是否上线：**
 ```bash
