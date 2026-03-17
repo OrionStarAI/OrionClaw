@@ -99,18 +99,28 @@ cd robot-ws-ingress
 npm install
 ```
 
-在 OpenClaw 的 `config.yaml` 中添加插件配置（`/path/to/` 替换为实际路径）：
+在 `~/.openclaw/openclaw.json` 中添加插件配置（`/path/to/robot-ws-ingress` 替换为实际目录路径）：
 
-```yaml
-plugins:
-  - path: /path/to/robot-ws-ingress/index.js
-    config:
-      enabled: true
-      port: 18795              # 网关监听端口
-      path: /robot/ws          # WebSocket 路径
-      token: "your-secret-token-here"      # 自定义一个安全 token（记住它，后面要用）
-      allowDeviceIds: []       # 留空表示允许所有设备，或填 ["my-robot"] 限制连接
-      gatewayPort: 18789       # OpenClaw Gateway 端口（默认 18789，通常不用改）
+```json
+{
+  "plugins": {
+    "load": {
+      "paths": ["/path/to/robot-ws-ingress"]
+    },
+    "entries": {
+      "robot-ws-ingress": {
+        "enabled": true,
+        "config": {
+          "port": 18795,
+          "path": "/robot/ws",
+          "token": "your-secret-token-here",
+          "allowDeviceIds": [],
+          "gatewayPort": 18789
+        }
+      }
+    }
+  }
+}
 ```
 
 启动 OpenClaw，插件会随 Gateway 自动加载。

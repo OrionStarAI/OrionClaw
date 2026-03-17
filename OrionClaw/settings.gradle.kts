@@ -24,5 +24,5 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "HelloApkDemo"
+rootProject.name = "OrionClaw"
 include(":app")
