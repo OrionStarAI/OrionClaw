@@ -46,7 +46,7 @@ POST {baseUrl}/robot/cmd?token={token}
 | `robot.getPlaceList` | 查询 | 当前地图所有命名点位 |
 | `nav.start` | 导航 | **异步** — 立即返回，机器人在后台移动 |
 | `nav.stop` | 导航 | 停止当前导航 |
-| `base.turn` | 运动 | 参数: `{"dir":"left"/"right","angleDeg":<ANGLE_DEG>,"speedDegPerSec":<SPEED_DEG_PER_SEC>}` |
+| `base.turn` | 运动 | 参数: `{"dir":"left"/"right","angleDeg":90,"speedDegPerSec":30}` |
 | `head.move` | 运动 | 参数: `{"pitchDeg": ..., "vMode": "absolute"}` |
 | `head.reset` | 运动 | 无需参数，头部复位 |
 | `camera.takePhoto` | 传感器 | 返回 base64 JPEG 图片 |
@@ -131,7 +131,7 @@ print('已保存:', path)
 
 | 参数 | 说明 | 范围 | 实测 |
 |------|------|------|------|
-| `pitchDeg` | 垂直俯仰（低头/抬头） | <PITCH_RAISED> ~ <PITCH_LOWERED> | ✅ **\<PITCH_RAISED\>=最仰头，\<PITCH_LOWERED\>=最低头** |
+| `pitchDeg` | 垂直俯仰（低头/抬头） | 0 ~ 80 | ✅ **0=最仰头，80=最低头** |
 | `hMode` | 水平模式 | `"absolute"` | 固定值 |
 | `vMode` | 垂直模式 | `"absolute"` | 固定值 |
 
@@ -139,12 +139,12 @@ print('已保存:', path)
 # 低头（鞠躬）
 curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
   -H "Content-Type: application/json" \
-  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"head.move","args":{"hMode":"absolute","vMode":"absolute","pitchDeg":<PITCH_LOWERED>},"timeoutMs":10000}'
+  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"head.move","args":{"hMode":"absolute","vMode":"absolute","pitchDeg":80},"timeoutMs":10000}'
 
 # 仰头
 curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
   -H "Content-Type: application/json" \
-  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"head.move","args":{"hMode":"absolute","vMode":"absolute","pitchDeg":<PITCH_RAISED>},"timeoutMs":10000}'
+  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"head.move","args":{"hMode":"absolute","vMode":"absolute","pitchDeg":0},"timeoutMs":10000}'
 
 # 复位
 curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
@@ -197,7 +197,7 @@ curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
 # 离开充电桩
 curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
   -H "Content-Type: application/json" \
-  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"charge.leave","args":{"speed":<LEAVE_SPEED>,"distance":<LEAVE_DISTANCE>},"timeoutMs":20000}'
+  -d '{"deviceId":"<YOUR_DEVICE_ID>","cmd":"charge.leave","args":{"speed":0.7,"distance":0.3},"timeoutMs":20000}'
 ```
 
 ---
@@ -251,8 +251,8 @@ curl -s -X POST "http://<GATEWAY_IP>:18795/robot/cmd?token=<YOUR_TOKEN>" \
   "steps": [
     {"t": 0,    "cmd": "screen.show",  "args": {"text": "🎵", "bg": "#E91E63"}, "label": "屏幕开场"},
     {"t": 500,  "cmd": "tts.play",     "args": {"text": "大家好"}, "wait": true, "label": "开场白"},
-    {"t": 3000, "cmd": "head.move",    "args": {"pitchDeg": "<PITCH_LOWERED>", "hMode": "absolute", "vMode": "absolute"}, "label": "低头"},
-    {"t": 6000, "cmd": "base.turn",    "args": {"dir": "left", "angleDeg": "<ANGLE_DEG>", "speedDegPerSec": "<SPEED_DEG_PER_SEC>"}, "label": "左转"},
+    {"t": 3000, "cmd": "head.move",    "args": {"pitchDeg": 80, "hMode": "absolute", "vMode": "absolute"}, "label": "低头"},
+    {"t": 6000, "cmd": "base.turn",    "args": {"dir": "left", "angleDeg": 90, "speedDegPerSec": 30}, "label": "左转"},
     {"t": 9000, "cmd": "screen.hide",  "args": {}, "label": "屏幕复位"},
     {"t": 9500, "cmd": "head.reset",   "args": {}, "label": "头部复位"}
   ]
@@ -298,7 +298,7 @@ python3 scripts/dance_player.py dances/dance_hello.json --speed 0.5
 
 | 动作类型 | 可用 | 指令 | 备注 |
 |----------|------|------|------|
-| 低头/仰头 | ✅ | `head.move` pitchDeg \<PITCH_RAISED\>~\<PITCH_LOWERED\> | \<PITCH_RAISED\>=最仰，\<PITCH_LOWERED\>=最低 |
+| 低头/仰头 | ✅ | `head.move` pitchDeg 0~80 | 0=最仰，80=最低 |
 | 底盘转身 | ✅ | `base.turn` | 充电状态下返回 -9 |
 | 语音播报 | ✅ | `tts.play` | — |
 | 音乐播放 | ✅ | `audio.play` | 需本地 HTTP 服务 |
