@@ -40,7 +40,7 @@ dependencies {
   implementation("androidx.viewpager2:viewpager2:1.1.0")
 
   // AgentOS SDK (for TTS/ASR etc.)
-  implementation("com.ainirobot.agent:sdk:0.4.5-SNAPSHOT")
+  implementation("com.orionstar.agent:sdk:0.4.5-SNAPSHOT")
 
   // NOTE: AgentOS SDK v0.4.4+ already bundles RobotService/RobotOS deps.
   // Avoid adding robotservice.jar manually, otherwise it causes duplicate classes.

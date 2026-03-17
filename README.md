@@ -165,13 +165,22 @@ app/build/outputs/apk/debug/app-debug.apk
 
 #### 2.4 安装到机器人
 
+**第一步：在机器人上开启 Wi-Fi ADB**
+
+在机器人的 Android 系统设置中，找到「开发者选项」→「无线调试」（或「ADB over Wi-Fi」），打开开关。需要在机器人本机上操作，开启后会显示机器人的 IP 地址和端口（默认 5555）。
+
 ```bash
 # 连接机器人（通过 Wi-Fi ADB）
 adb connect <机器人IP地址>:5555
+```
 
-# 安装 APK
+**第二步：安装 APK**
+
+```bash
 adb install -r -t app/build/outputs/apk/debug/app-debug.apk
 ```
+
+> ⚠️ 安装时机器人屏幕上可能弹出「是否允许安装」的授权弹框，**需要在机器人上手动点击「允许」**，否则安装会一直等待或失败。
 
 #### 2.5 启动 APP（带参数）
 
