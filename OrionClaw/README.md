@@ -21,21 +21,9 @@ APK 启动后会主动通过 WebSocket 连接到 `robot-ws-ingress` 服务，注
 
 ## 编译前准备
 
-### 第 1 步：获取厂商 SDK
+### 第 1 步：确认 SDK
 
-联系你的机器人厂商，获取适配你的机器人 OS 版本的 SDK jar 文件（通常命名为 `robotservice_<版本>.jar`），重命名为 `robotservice.jar`，放入：
-
-```
-app/libs/robotservice.jar
-```
-
-同时确认 `settings.gradle.kts` 中 Maven 仓库地址已更新为厂商提供的实际地址（当前为占位符）：
-
-```kotlin
-maven {
-    url = uri("https://your-vendor-maven-repo/")  // ← 替换为厂商实际 Maven 地址
-}
-```
+SDK jar（`robotservice.jar`）已在 `app/libs/` 目录中，Maven 仓库地址和 credentials 已在 `settings.gradle.kts` 中配置好，**无需任何修改。**
 
 ### 第 2 步：确认包名
 
