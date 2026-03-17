@@ -43,21 +43,49 @@ SDK jar（`robotservice.jar`）已在 `app/libs/` 目录中，Maven 仓库地址
 
 ---
 
-## 安装到机器人
+## 获取 APK
+
+**推荐：直接下载预编译包（无需 Android Studio）**
+
+从 [GitHub Releases](https://github.com/OrionStarAI/OrionClaw/releases/latest) 下载最新 APK：
 
 ```bash
-adb connect <ADB_ADDRESS>
-adb install -r -t app/build/outputs/apk/debug/app-debug.apk
+curl -L -o orionclaw.apk \
+  https://github.com/OrionStarAI/OrionClaw/releases/download/v1.0.0/orionclaw-v1.0.0.apk
 ```
+
+如需自行编译，参考上方「编译前准备」步骤（需要 Android SDK）。
+
+---
+
+## 安装到机器人
+
+**第一步：通过 backoffice 进入机器人后台，打开 Wi-Fi ADB 调试。**
+
+```bash
+# 连接机器人
+adb connect <机器人IP>:5555
+
+# 安装 APK
+adb -s <机器人IP>:5555 install -r -t orionclaw.apk
+```
+
+> ⚠️ 安装时机器人屏幕可能弹出授权框，**需要在机器人上手动点击「允许」**。
 
 ---
 
 ## 启动方式（带参数）
 
-建议通过 ADB 携带配置参数启动，避免手动在界面输入：
+建议通过 ADB 携带配置参数启动，避免手动在界面输入。
+
+> ⚠️ 必须先 `force-stop` 再启动，否则如果 APP 已在运行，参数注入不会生效。
 
 ```bash
-adb shell am start -n com.orionstar.openclaw/.MainActivity \
+# 先强制停止
+adb -s <机器人IP>:5555 shell am force-stop com.orionstar.openclaw
+sleep 2
+# 启动并注入配置
+adb -s <机器人IP>:5555 shell am start -n com.orionstar.openclaw/.MainActivity \
   --es gatewayHost "<YOUR_GATEWAY_IP>" \
   --es token "<YOUR_TOKEN>" \
   --es deviceId "<YOUR_DEVICE_ID>"
