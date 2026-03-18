@@ -203,7 +203,7 @@ Windows 用户直接在浏览器打开上方链接下载即可。
 
 #### 2.2 在机器人上开启 Wi-Fi ADB
 
-通过 backoffice 进入机器人后台，打开 Wi-Fi ADB 调试。开启后记录机器人的 IP 地址（端口默认 5555）。
+通过猎户星空接待后台获取动态密码，并在机器人上打开Wi-Fi ADB调试。开启后记录机器人的 IP 地址（端口默认 5555）。
 
 ```bash
 adb connect <机器人IP地址>:5555
@@ -215,7 +215,7 @@ adb connect <机器人IP地址>:5555
 adb -s <机器人IP地址>:5555 install -r -t orionclaw.apk
 ```
 
-> ⚠️ 安装时机器人屏幕上可能弹出「是否允许安装」的授权弹框，**需要在机器人上手动点击「允许」**，否则安装会一直等待或失败。
+> ⚠️ 安装时机器人屏幕上可能弹出「是否允许xxx」（例如相机、麦克风等）的授权弹框，**需要在机器人上手动点击「允许」**，否则安装会一直等待或失败。
 
 #### 2.4 启动 APP（带参数）
 
@@ -239,7 +239,7 @@ adb -s <机器人IP地址>:5555 shell am start -n com.orionstar.openclaw/.MainAc
 > - `token`：与第 1 步配置的 token 一致
 > - `deviceId`：随便起一个名字，后面会用到
 
-**验证机器人是否上线：**
+完成后，通过应用中心返回机器人主界面，再次点击应用图标完成重启，然后验证机器人是否上线：
 ```bash
 curl "http://localhost:18795/robot/online?token=your-secret-token-here"
 # 期望返回：{"ok":true,"devices":["my-robot"]}
