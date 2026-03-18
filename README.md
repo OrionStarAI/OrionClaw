@@ -239,7 +239,7 @@ adb -s <机器人IP地址>:5555 shell am start -n com.orionstar.openclaw/.MainAc
 > - `token`：与第 1 步配置的 token 一致
 > - `deviceId`：随便起一个名字，后面会用到
 
-完成后，在机器人触摸屏上从主界面进入「应用中心」，找到 OrionClaw 图标点击启动，完成重启，然后验证机器人是否上线：
+完成后，在机器人触摸屏上三指下拉进入「应用中心」，回到主界面后找到 OrionClaw 图标点击启动，完成重启，然后验证机器人是否上线：
 ```bash
 curl "http://localhost:18795/robot/online?token=your-secret-token-here"
 # 期望返回：{"ok":true,"devices":["my-robot"]}
